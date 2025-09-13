@@ -1,9 +1,8 @@
 
 from fastapi import FastAPI
-from core.config import settings
 from core.setup import PROJECT_INFO
 from core.extensions import configure_cors
-from src.database import init_db
+from src.db.database import init_db
 from src.routes import router
 from src.websocket import ws_router
 
