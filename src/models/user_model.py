@@ -1,5 +1,5 @@
 from sqlalchemy import Column, Integer, String, Boolean
-from src.database import Base
+from src.db.database import Base
 from passlib.context import CryptContext
 
 # Configuration du hachage des mots de passe
@@ -9,11 +9,14 @@ class User(Base):
     __tablename__ = "users"
 
     id = Column(Integer, primary_key=True, index=True)
-    username = Column(String(50), unique=True, nullable=False)
-    email = Column(String(100), unique=True, nullable=False)
+    firstname = Column(String(80), unique=False, nullable=True)
+    lastname = Column(String(50), unique=False, nullable=True)
+    username = Column(String(20), unique=True, nullable=False)
+    email = Column(String(25), unique=True, nullable=False)
+    phone_number = Column(String, unique=True, nullable=False)
     hashed_password = Column(String(255), nullable=False)
-    is_active = Column(Boolean, default=True)
-    role = Column(String(20), default="user")
+    is_active = Column(Boolean, default=False)
+    role = Column(String(15), default="user")
 
     def verify_password(self, plain_password: str) -> bool:
         """Vérifie si le mot de passe correspond au hash stocké."""
