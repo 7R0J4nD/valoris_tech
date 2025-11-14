@@ -1,4 +1,10 @@
 from pydantic import BaseModel, EmailStr, validator
+from enum import Enum
+
+class UserRole(str, Enum):
+    admin = "admin"
+    manager = "manager"
+    user = "user"
 
 class UserBase(BaseModel):
     firstname: str | None = None
@@ -6,12 +12,10 @@ class UserBase(BaseModel):
     username: str
     email: EmailStr
     phone_number: str
+    role: UserRole = UserRole.user  # 👈 ajout ici
 
 class UserCreate(UserBase):
-    username: str
-    email: EmailStr
-    phone_number: str
-    password : str
+    password: str
 
 class UserUpdate(BaseModel):
     firstname: str | None = None
@@ -19,11 +23,12 @@ class UserUpdate(BaseModel):
     username: str | None = None
     email: EmailStr | None = None
     phone_number: str | None = None
+    role: UserRole | None = None  # 👈 autoriser la mise à jour du rôle
 
     @validator("username")
     def username_not_empty(cls, value):
         if value is not None and not value.strip():
-            raise ValueError("username can not be empty !")
+            raise ValueError("username cannot be empty!")
         return value
 
 class UserResponse(UserBase):
