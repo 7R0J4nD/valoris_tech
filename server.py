@@ -1,5 +1,5 @@
 import uvicorn
-from core.app import create_app  # Import de l’application initialisée
+from core.app import create_app
 
 app = create_app()
 
